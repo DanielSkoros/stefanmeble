@@ -1,0 +1,44 @@
+{
+  "reviews": [
+    {
+      "name": "Monika Mendowska",
+      "service": "Szafy i kuchnia na wymiar",
+      "rating": 5,
+      "text": "Bardzo polecam! Pan Maciej nie tylko świetnie wykonał meble (dwie szafy - w sypialni i w korytarzu, szafkę łazienkową i pełną zabudowę kuchenną), ale też doradził nam kilka rozwiązań, na które sami byśmy nie wpadli. Jakość materiałów i wykończenia na najwyższym poziomie. Świetny kontakt i terminowość, co w dzisiejszych czasach nie jest oczywistością. Z pewnością wrócę po kolejną realizację.",
+      "source": "Google",
+      "sourceUrl": "https://maps.app.goo.gl/aG2DWxQm4asUKbcM8"
+    },
+    {
+      "name": "Agnieszka B",
+      "service": "Kuchnia, szafa i łazienka",
+      "rating": 5,
+      "text": "Z pełnym przekonaniem polecam pana Macieja, stolarza, który wykonał dla mnie kuchnię, szafę w przedpokoju oraz szafkę łazienkową. Wszystkie meble zostały zrobione bardzo starannie, z dbałością o każdy detal i zgodnie z ustaleniami. Praca została wykonana terminowo, a kontakt i współpraca przebiegały bezproblemowo. Jestem bardzo zadowolona z efektu końcowego i z przyjemnością polecam pana Macieja każdemu, kto szuka solidnego i profesjonalnego stolarza.",
+      "source": "Google",
+      "sourceUrl": "https://maps.app.goo.gl/jLeU356bBTv6UhG1A"
+    },
+    {
+      "name": "Krystian Horbik",
+      "service": "Meble do sypialni",
+      "rating": 5,
+      "text": "Bardzo polecamy Pana Macieja! Zamówiliśmy meble do sypialni – łóżko, szafę i toaletkę – i efekt przerósł nasze oczekiwania. Wszystko zostało wykonane bardzo solidnie, z dbałością o najmniejsze detale. Widać ogromne doświadczenie i pasję do rzemiosła. Meble są nie tylko piękne, ale też bardzo funkcjonalne - tu Pan Maciej doradził rozwiązania, które rzeczywiście się sprawdzają. Kontakt był świetny, a terminowość bez zarzutu. Z pewnością jeszcze wrócimy z kolejnymi projektami!",
+      "source": "Google",
+      "sourceUrl": "https://maps.app.goo.gl/H5ZbU51g42yno6aH9"
+    },
+    {
+      "name": "Kamil Pałyga",
+      "service": "Kuchnia i łazienki",
+      "rating": 5,
+      "text": "Jestem bardzo zadowolony z usług Pana Macieja. Wykonywał dla nas zabudowę kuchenną oraz zabudowę w dwóch łazienkach. Wszystkie meble starannie wykonane, na najlepszych materiałach. Ogromny plus za terminowość, zamówienia zrealizowane przed zakładanym terminem. Od samego początku bardzo miły i szybki kontakt, zarówno telefoniczny i mailowy. Gorąco polecam usługi Pana Macieja, ja sam na pewno skorzystam jeszcze nie raz.",
+      "source": "Google",
+      "sourceUrl": "https://maps.app.goo.gl/QAbgeEF1cyjMGLaRA"
+    },
+    {
+      "name": "Greg gregor",
+      "service": "Kuchnia na wymiar",
+      "rating": 5,
+      "text": "100% to mało aby polecić firmę Stefan Meble. Jakość wykonania mebli kuchennych, precyzja, rzetelność to główne cechy jakimi kieruje się Pan Maciej. Bardzo wysoki poziom pracy i organizacji. Pan Maciej w czasie montażu skupiał się na dbałości o najmniejszy szczegół nie mówiąc o porządku, który zawsze bezwzględnie po sobie zostawiał. Z czystym sumieniem polecam i będę polecać Pana Macieja. Dziękuję jeszcze raz za wymarzoną i mega funkcjonalną kuchnię. W załączeniu przesyłam zdjęcia z realizacji. Pozdrawiam. Malgosia 😊😘",
+      "source": "Google",
+      "sourceUrl": "https://maps.app.goo.gl/cCnngbhT3MG7wAhS9"
+    }
+  ]
+}

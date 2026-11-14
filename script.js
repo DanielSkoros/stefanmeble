@@ -92,10 +92,8 @@ const SLIDER_PROJECT_COUNT = 4;
 const projectGrid = document.querySelector("#project-grid");
 
 projects.slice(0, SLIDER_PROJECT_COUNT).forEach((project, projectIndex) => {
-  const card = document.createElement("button");
+  const card = document.createElement("article");
   card.className = "project-card";
-  card.type = "button";
-  card.setAttribute("aria-label", `Otwórz galerię: ${project.title}`);
   card.innerHTML = `
     <div class="project-image">
       <img src="${project.images[0]}" alt="${project.title}" loading="lazy">
@@ -107,8 +105,9 @@ projects.slice(0, SLIDER_PROJECT_COUNT).forEach((project, projectIndex) => {
       </div>
       <span aria-hidden="true">↗</span>
     </div>
+    <button class="project-open" type="button" aria-label="Otwórz galerię: ${project.title}"></button>
   `;
-  card.addEventListener("click", () => openLightbox(projectIndex));
+  card.querySelector(".project-open").addEventListener("click", () => openLightbox(projectIndex));
   projectGrid.append(card);
 });
 
@@ -192,7 +191,11 @@ function goToSlide(index) {
   const gap = parseFloat(getComputedStyle(carouselTrack).gap) || 0;
   const cardWidth = carouselCards[0].getBoundingClientRect().width;
   carouselTrack.style.transform = `translateX(-${carouselIndex * (cardWidth + gap)}px)`;
-  carouselDots.forEach((dot, i) => dot.classList.toggle("is-active", i === carouselIndex));
+  carouselDots.forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === carouselIndex);
+    if (i === carouselIndex) dot.setAttribute("aria-current", "true");
+    else dot.removeAttribute("aria-current");
+  });
 }
 
 carouselDots.forEach((dot, i) => dot.addEventListener("click", () => goToSlide(i)));
@@ -244,12 +247,14 @@ const nav = document.querySelector(".nav");
 menuToggle.addEventListener("click", () => {
   const isOpen = nav.classList.toggle("is-open");
   menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Zamknij menu" : "Otwórz menu");
 });
 
 nav.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     nav.classList.remove("is-open");
     menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Otwórz menu");
   });
 });
 
@@ -401,40 +406,106 @@ document.addEventListener("keydown", event => {
 });
 
 document.querySelector("#year").textContent = new Date().getFullYear();
-// Delikatne pojawianie się elementów przy przewijaniu
-const revealTargets = [
-  ".hero-copy",
-  ".hero-visual",
-  ".section-intro",
-  "#project-grid",
-  ".more-row",
-  ".reviews-intro",
-  ".review",
-  ".about-image",
-  ".about-copy",
-  ".contact > div",
-  ".contact-details",
-  ".footer-grid",
-  ".footer-bottom"
-];
 
-const revealElements = [...document.querySelectorAll(revealTargets.join(","))];
-revealElements.forEach((el, i) => {
-  el.classList.add("reveal");
-  // Opóźnienie tylko dla elementów z tego samego rodzaju (np. kolejne opinie)
-  el.style.setProperty("--reveal-delay", `${(i % 4) * 80}ms`);
-});
+// Opinie: dane z data/reviews.json, ten sam wygląd co wcześniej.
+// Statyczny HTML w index.html zostaje jako zapas (np. przy otwarciu z dysku).
+const reviewsList = document.querySelector(".reviews-list");
 
-if ("IntersectionObserver" in window) {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+function renderReviews(reviews) {
+  const fragment = document.createDocumentFragment();
+  reviews.forEach(review => {
+    const card = document.createElement("article");
+    card.className = "review";
 
-  revealElements.forEach(el => revealObserver.observe(el));
-} else {
-  revealElements.forEach(el => el.classList.add("is-visible"));
+    const stars = document.createElement("div");
+    const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
+    stars.className = "stars";
+    stars.setAttribute("aria-label", `${rating} na 5`);
+    stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+    const text = document.createElement("p");
+    text.textContent = `\u201E${review.text}\u201D`;
+
+    const footer = document.createElement("footer");
+    const name = document.createElement("strong");
+    name.textContent = review.name || "";
+    footer.append(name);
+
+    if (review.service) {
+      const service = document.createElement("span");
+      service.textContent = review.service;
+      footer.append(service);
+    }
+
+    if (review.source) {
+      const source = document.createElement("a");
+      source.className = "review-source";
+      source.href = review.sourceUrl || "#";
+      source.target = "_blank";
+      source.rel = "noopener";
+      source.textContent = `${review.source} \u2197`;
+      footer.append(source);
+    }
+
+    card.append(stars, text, footer);
+    fragment.append(card);
+  });
+  reviewsList.replaceChildren(fragment);
 }
+
+async function loadReviews() {
+  if (Array.isArray(window.REVIEWS_DATA)) return window.REVIEWS_DATA;
+  try {
+    const response = await fetch("data/reviews.json", { cache: "no-store" });
+    if (!response.ok) return null;
+    const data = await response.json();
+    return Array.isArray(data.reviews) ? data.reviews : null;
+  } catch (error) {
+    return null; // np. otwarcie pliku bez serwera: zostaje statyczny HTML
+  }
+}
+
+// Delikatne pojawianie się elementów przy przewijaniu
+function setupReveal() {
+  const revealTargets = [
+    ".hero-copy",
+    ".hero-visual",
+    ".section-intro",
+    "#project-grid",
+    ".more-row",
+    ".reviews-intro",
+    ".review",
+    ".about-image",
+    ".about-copy",
+    ".contact > div",
+    ".contact-details",
+    ".footer-grid",
+    ".footer-bottom"
+  ];
+
+  const revealElements = [...document.querySelectorAll(revealTargets.join(","))];
+  revealElements.forEach((el, i) => {
+    el.classList.add("reveal");
+    // Opóźnienie tylko dla elementów z tego samego rodzaju (np. kolejne opinie)
+    el.style.setProperty("--reveal-delay", `${(i % 4) * 80}ms`);
+  });
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    revealElements.forEach(el => el.classList.add("is-visible"));
+  }
+}
+
+loadReviews().then(reviews => {
+  if (reviews) renderReviews(reviews);
+  setupReveal();
+});
