@@ -1,17 +1,20 @@
-const IMAGE_WIDTHS = [800, 1400, 2000];
+// Wersja zdjęć: po wymianie plików podbij liczbę tutaj i w index.html (szukaj „?v=”),
+// bo zdjęcia są cache'owane na rok
+const IMAGE_VERSION = 3;
+const IMAGE_WIDTHS = [640, 960, 1400, 2000];
 const FALLBACK_WIDTH = 1400;
-const CARD_SIZES = "(max-width: 520px) 80vw, (max-width: 800px) 60vw, 38vw";
+const CARD_SIZES = "(max-width: 520px) 71vw, (max-width: 800px) 53vw, 32vw";
 const LIGHTBOX_SIZES = "(max-width: 800px) calc(100vw - 60px), (max-width: 1152px) calc(100vw - 332px), 820px";
 
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const scrollBehavior = () => (reducedMotionQuery.matches ? "auto" : "smooth");
 
 function imageVariants(path) {
-  const srcset = ext => IMAGE_WIDTHS.map(width => `${path}-${width}.${ext} ${width}w`).join(", ");
+  const srcset = ext => IMAGE_WIDTHS.map(width => `${path}-${width}.${ext}?v=${IMAGE_VERSION} ${width}w`).join(", ");
   return {
     webp: srcset("webp"),
     jpg: srcset("jpg"),
-    fallback: `${path}-${FALLBACK_WIDTH}.jpg`
+    fallback: `${path}-${FALLBACK_WIDTH}.jpg?v=${IMAGE_VERSION}`
   };
 }
 
@@ -175,7 +178,14 @@ function updateFeaturedOnScroll() {
 projectGrid.addEventListener("scroll", updateFeaturedOnScroll, { passive: true });
 setFeaturedProject(0);
 
-// Karuzela zdjęć w hero
+// Karuzela zdjęć w hero: kolejne zdjęcia dociągają się po wczytaniu strony,
+// żeby nie konkurowały z pierwszym (LCP)
+window.addEventListener("load", () => {
+  const loadRest = () => document.querySelectorAll('.carousel-card img[loading="lazy"]').forEach(img => { img.loading = "eager"; });
+  if ("requestIdleCallback" in window) requestIdleCallback(loadRest, { timeout: 2000 });
+  else setTimeout(loadRest, 500);
+});
+
 const carouselTrack = document.querySelector(".carousel-track");
 const carouselCards = [...document.querySelectorAll(".carousel-card")];
 const carouselDots = [...document.querySelectorAll(".carousel-dots button")];
