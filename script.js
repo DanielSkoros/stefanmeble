@@ -1,88 +1,77 @@
+const IMAGE_WIDTHS = [800, 1400, 2000];
+const FALLBACK_WIDTH = 1400;
+const CARD_SIZES = "(max-width: 520px) 80vw, (max-width: 800px) 60vw, 38vw";
+const LIGHTBOX_SIZES = "(max-width: 800px) calc(100vw - 60px), 800px";
+
+function imageVariants(path) {
+  const srcset = ext => IMAGE_WIDTHS.map(width => `${path}-${width}.${ext} ${width}w`).join(", ");
+  return {
+    webp: srcset("webp"),
+    jpg: srcset("jpg"),
+    fallback: `${path}-${FALLBACK_WIDTH}.jpg`
+  };
+}
+
 const projects = [
   {
-    title: "Kuchnia z frontami z płyty",
+    title: "Kuchnia grafitowa z dębem",
     category: "Kuchnia · Meble na wymiar",
-    description: "Przykładowa realizacja z frontami z płyty meblowej i prostymi detalami.",
-    images: [
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
-    ]
+    description: "Grafitowe fronty, dębowy blat i szafki górne, oświetlenie LED.",
+    images: ["assets/images/projects/01/photo-01"]
   },
   {
-    title: "Zabudowa do spokojnego wnętrza",
-    category: "Salon · Zabudowa",
-    description: "Przykład zabudowy zaprojektowanej z myślą o przechowywaniu i harmonii.",
-    images: [
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=85"
-    ]
+    title: "Sypialnia z podestem",
+    category: "Sypialnia · Zabudowa",
+    description: "Łóżko na podeście, dębowy panel ścienny, szafa z lustrem.",
+    images: ["assets/images/projects/02/photo-01"]
   },
   {
-    title: "Zabudowa w salonie",
-    category: "Wnętrze · Detale",
-    description: "Przykładowe połączenie płyt meblowych, faktur i ciepłych kolorów.",
-    images: [
-      "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
-    ]
+    title: "Łazienka z szafką i słupkiem",
+    category: "Łazienka · Zabudowa",
+    description: "Szafka pod umywalkę, słupek i zabudowa nad WC.",
+    images: ["assets/images/projects/03/photo-01"]
   },
   {
-    title: "Miejsce do odpoczynku",
-    category: "Sypialnia · Meble na wymiar",
-    description: "Przykładowa aranżacja z prostymi formami i przytulnym wykończeniem.",
-    images: [
-      "https://picsum.photos/seed/stefan-r4-1/1400/1000",
-      "https://picsum.photos/seed/stefan-r4-2/1400/1000",
-      "https://picsum.photos/seed/stefan-r4-3/1400/1000"
-    ]
+    title: "Szafka łazienkowa miętowa",
+    category: "Łazienka · Meble na wymiar",
+    description: "Podwieszana szafka z frontami frezowanymi i złotymi uchwytami.",
+    images: ["assets/images/projects/04/photo-01"]
   },
   {
-    title: "Biurko i regały w gabinecie",
-    category: "Biuro · Meble na wymiar",
-    description: "Przykładowe biurko z zabudową regałową, dopasowane do wysokości sufitu.",
-    images: [
-      "https://picsum.photos/seed/stefan-r5-1/1400/1000",
-      "https://picsum.photos/seed/stefan-r5-2/1400/1000"
-    ]
+    title: "Kuchnia z wyspą i witrynami",
+    category: "Kuchnia · Meble na wymiar",
+    description: "Zabudowa dąb i biel, wyspa, dwie witryny.",
+    images: ["assets/images/projects/05/photo-01"]
   },
   {
-    title: "Łazienka z szafkami pod wymiar",
-    category: "Łazienka · Zabudowy",
-    description: "Przykładowa łazienka z szafkami i lustrem zabudowanym w niszy.",
-    images: [
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85"
-    ]
+    title: "Szafa narożna frezowana",
+    category: "Sypialnia · Zabudowa",
+    description: "Szafa w narożniku z szufladami i frezowanymi frontami.",
+    images: ["assets/images/projects/06/photo-01"]
   },
   {
-    title: "Przedpokój z garderobą",
-    category: "Przedpokój · Zabudowy",
-    description: "Przykładowa garderoba z frontami z płyty i wewnętrznym oświetleniem.",
-    images: [
-      "https://picsum.photos/seed/stefan-r7-1/1400/1000",
-      "https://picsum.photos/seed/stefan-r7-2/1400/1000"
-    ]
+    title: "Kuchnia w U z witrynami",
+    category: "Kuchnia · Meble na wymiar",
+    description: "Białe fronty, drewniany blat, podświetlane witryny.",
+    images: ["assets/images/projects/07/photo-01"]
   },
   {
-    title: "Sypialnia z zabudową na wymiar",
-    category: "Sypialnia · Zabudowy",
-    description: "Przykładowa zabudowa nad łóżkiem z szafkami nocnymi wkomponowanymi w ścianę.",
-    images: [
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1400&q=85"
-    ]
+    title: "Kuchnia z niebieskimi frontami",
+    category: "Kuchnia · Meble na wymiar",
+    description: "Niebieskie szafki górne, zabudowa do sufitu, witryna ze złotą ramą.",
+    images: ["assets/images/projects/08/photo-01"]
   },
   {
-    title: "Schody z półkami",
-    category: "Wnętrze · Zabudowy",
-    description: "Przykładowe schody z zabudową półek pod stopniami.",
-    images: [
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85"
-    ]
+    title: "Kuchnia z wyspą i zabudową",
+    category: "Kuchnia · Meble na wymiar",
+    description: "Białe szafki do sufitu, dębowe dolne, wyspa.",
+    images: ["assets/images/projects/09/photo-01"]
+  },
+  {
+    title: "Łazienka z granatowym regałem",
+    category: "Łazienka · Zabudowa",
+    description: "Granatowy regał, dębowa zabudowa nad WC, szafka pod umywalką.",
+    images: ["assets/images/projects/10/photo-01"]
   }
 ];
 
@@ -94,9 +83,13 @@ const projectGrid = document.querySelector("#project-grid");
 projects.slice(0, SLIDER_PROJECT_COUNT).forEach((project, projectIndex) => {
   const card = document.createElement("article");
   card.className = "project-card";
+  const firstImage = imageVariants(project.images[0]);
   card.innerHTML = `
     <div class="project-image">
-      <img src="${project.images[0]}" alt="${project.title}" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="${firstImage.webp}" sizes="${CARD_SIZES}">
+        <img src="${firstImage.fallback}" srcset="${firstImage.jpg}" sizes="${CARD_SIZES}" alt="${project.title}" loading="lazy" decoding="async">
+      </picture>
     </div>
     <div class="project-meta">
       <div>
@@ -214,6 +207,8 @@ function slideStep() {
 }
 
 carouselViewport.addEventListener("pointerdown", event => {
+  if (!event.isPrimary) return;
+  if (event.pointerType === "mouse" && event.button !== 0) return;
   isDragging = true;
   dragStartX = event.clientX;
   dragDelta = 0;
@@ -222,7 +217,7 @@ carouselViewport.addEventListener("pointerdown", event => {
 });
 
 carouselViewport.addEventListener("pointermove", event => {
-  if (!isDragging) return;
+  if (!isDragging || !event.isPrimary) return;
   dragDelta = event.clientX - dragStartX;
   carouselTrack.style.transform = `translateX(${-carouselIndex * slideStep() + dragDelta}px)`;
 });
@@ -244,6 +239,12 @@ carouselViewport.addEventListener("pointercancel", endCarouselDrag);
 const menuToggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav");
 
+function closeMenu() {
+  nav.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Otwórz menu");
+}
+
 menuToggle.addEventListener("click", () => {
   const isOpen = nav.classList.toggle("is-open");
   menuToggle.setAttribute("aria-expanded", String(isOpen));
@@ -251,16 +252,27 @@ menuToggle.addEventListener("click", () => {
 });
 
 nav.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    nav.classList.remove("is-open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.setAttribute("aria-label", "Otwórz menu");
-  });
+  link.addEventListener("click", closeMenu);
+});
+
+document.addEventListener("click", event => {
+  if (!nav.classList.contains("is-open")) return;
+  if (event.target.closest(".site-header")) return;
+  closeMenu();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key !== "Escape" || !nav.classList.contains("is-open")) return;
+  closeMenu();
+  menuToggle.focus();
 });
 
 // Galeria realizacji w oknie dialogowym
 const lightbox = document.querySelector(".lightbox");
+const lightboxWebp = document.querySelector(".lightbox-webp");
 const lightboxImage = document.querySelector(".lightbox-image");
+const lightboxPrev = document.querySelector(".lightbox-prev");
+const lightboxNext = document.querySelector(".lightbox-next");
 const lightboxTitle = document.querySelector(".lightbox-title");
 const lightboxDescription = document.querySelector(".lightbox-description");
 const lightboxCount = document.querySelector(".lightbox-count");
@@ -305,21 +317,34 @@ function updateToc() {
   if (lightbox.open) centerActiveToc(true);
 }
 
+window.addEventListener("resize", () => {
+  if (lightbox.open) centerActiveToc(false);
+}, { passive: true });
+
 // Zmiana zdjęcia: stare wysuwa się w bok, nowe (już zdekodowane) wjeżdża z drugiej strony
 let imageTransitionId = 0;
 
-async function swapLightboxImage(url, alt, direction) {
+async function swapLightboxImage(path, alt, direction) {
   const id = ++imageTransitionId;
+  const image = imageVariants(path);
 
   // Zdekodowanie przed podmianą, żeby nie migało puste miejsce
   const pre = new Image();
-  pre.src = url;
+  pre.srcset = image.webp;
+  pre.sizes = LIGHTBOX_SIZES;
+  pre.src = image.fallback;
   try { await pre.decode(); } catch (error) { /* użyjemy zwykłego src */ }
   if (id !== imageTransitionId) return;
 
-  if (!direction || !lightbox.open || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    lightboxImage.src = url;
+  function setImage() {
+    lightboxWebp.srcset = image.webp;
+    lightboxImage.srcset = image.jpg;
+    lightboxImage.src = image.fallback;
     lightboxImage.alt = alt;
+  }
+
+  if (!direction || !lightbox.open || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setImage();
     return;
   }
 
@@ -331,14 +356,17 @@ async function swapLightboxImage(url, alt, direction) {
     ],
     { duration: 240, easing: "ease-in", fill: "forwards" }
   );
-  await out.finished;
+  try {
+    await out.finished;
+  } catch (error) {
+    if (id !== imageTransitionId) return;
+  }
   if (id !== imageTransitionId) {
     out.cancel();
     return;
   }
 
-  lightboxImage.src = url;
-  lightboxImage.alt = alt;
+  setImage();
   out.cancel();
   lightboxImage.animate(
     [
@@ -351,6 +379,9 @@ async function swapLightboxImage(url, alt, direction) {
 
 function showLightboxImage(direction = 0) {
   const project = projects[activeProject];
+  const hasMultipleImages = project.images.length > 1;
+  lightboxPrev.hidden = !hasMultipleImages;
+  lightboxNext.hidden = !hasMultipleImages;
   swapLightboxImage(project.images[activeImage], `${project.title} — zdjęcie ${activeImage + 1}`, direction);
   lightboxTitle.textContent = project.title;
   lightboxDescription.textContent = project.description;
@@ -361,12 +392,15 @@ function showLightboxImage(direction = 0) {
 // Preload: zdjęcia otwartej realizacji i następnej, żeby przejścia były płynne
 const preloadedImages = new Set();
 
-function preloadImages(urls) {
-  urls.forEach(url => {
-    if (preloadedImages.has(url)) return;
-    preloadedImages.add(url);
+function preloadImages(paths) {
+  paths.forEach(path => {
+    if (preloadedImages.has(path)) return;
+    preloadedImages.add(path);
+    const image = imageVariants(path);
     const img = new Image();
-    img.src = url;
+    img.srcset = image.webp;
+    img.sizes = LIGHTBOX_SIZES;
+    img.src = image.fallback;
   });
 }
 
@@ -387,12 +421,16 @@ document.querySelector("#more-projects").addEventListener("click", () => openLig
 
 function moveLightbox(direction) {
   const images = projects[activeProject].images;
+  if (images.length < 2) return;
   activeImage = (activeImage + direction + images.length) % images.length;
+  if (activeImage === images.length - 1) {
+    preloadImages(projects[(activeProject + 1) % projects.length].images);
+  }
   showLightboxImage(direction);
 }
 
-document.querySelector(".lightbox-prev").addEventListener("click", () => moveLightbox(-1));
-document.querySelector(".lightbox-next").addEventListener("click", () => moveLightbox(1));
+lightboxPrev.addEventListener("click", () => moveLightbox(-1));
+lightboxNext.addEventListener("click", () => moveLightbox(1));
 document.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
 
 lightbox.addEventListener("click", event => {
@@ -406,64 +444,6 @@ document.addEventListener("keydown", event => {
 });
 
 document.querySelector("#year").textContent = new Date().getFullYear();
-
-// Opinie: dane z data/reviews.json, ten sam wygląd co wcześniej.
-// Statyczny HTML w index.html zostaje jako zapas (np. przy otwarciu z dysku).
-const reviewsList = document.querySelector(".reviews-list");
-
-function renderReviews(reviews) {
-  const fragment = document.createDocumentFragment();
-  reviews.forEach(review => {
-    const card = document.createElement("article");
-    card.className = "review";
-
-    const stars = document.createElement("div");
-    const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
-    stars.className = "stars";
-    stars.setAttribute("aria-label", `${rating} na 5`);
-    stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
-
-    const text = document.createElement("p");
-    text.textContent = `\u201E${review.text}\u201D`;
-
-    const footer = document.createElement("footer");
-    const name = document.createElement("strong");
-    name.textContent = review.name || "";
-    footer.append(name);
-
-    if (review.service) {
-      const service = document.createElement("span");
-      service.textContent = review.service;
-      footer.append(service);
-    }
-
-    if (review.source) {
-      const source = document.createElement("a");
-      source.className = "review-source";
-      source.href = review.sourceUrl || "#";
-      source.target = "_blank";
-      source.rel = "noopener";
-      source.textContent = `${review.source} \u2197`;
-      footer.append(source);
-    }
-
-    card.append(stars, text, footer);
-    fragment.append(card);
-  });
-  reviewsList.replaceChildren(fragment);
-}
-
-async function loadReviews() {
-  if (Array.isArray(window.REVIEWS_DATA)) return window.REVIEWS_DATA;
-  try {
-    const response = await fetch("data/reviews.json", { cache: "no-store" });
-    if (!response.ok) return null;
-    const data = await response.json();
-    return Array.isArray(data.reviews) ? data.reviews : null;
-  } catch (error) {
-    return null; // np. otwarcie pliku bez serwera: zostaje statyczny HTML
-  }
-}
 
 // Delikatne pojawianie się elementów przy przewijaniu
 function setupReveal() {
@@ -505,7 +485,4 @@ function setupReveal() {
   }
 }
 
-loadReviews().then(reviews => {
-  if (reviews) renderReviews(reviews);
-  setupReveal();
-});
+setupReveal();
