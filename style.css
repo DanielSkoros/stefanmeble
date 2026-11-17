@@ -1,3 +1,53 @@
+/* Fonty hostowane lokalnie (subsety latin i latin-ext) */
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("assets/fonts/dm-sans-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("assets/fonts/dm-sans-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/kalam-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/kalam-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("assets/fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --ink: #25231f;
   --muted: #6b6861;
@@ -79,7 +129,7 @@ img { display: block; width: 100%; }
   align-items: center;
   gap: 10px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -102,7 +152,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   gap: 35px;
   margin-top: 22px;
   padding: 15px 19px;
-  font-size: 11px;
+  font-size: 12px;
   border: 0; /* <button> ma domyślną ramkę przeglądarki, <a> jej nie ma */
   font-family: inherit;
   line-height: 1.2;
@@ -129,7 +179,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   gap: 13px;
   margin-top: 55px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
 }
 .note-line { width: 32px; height: 1px; background: var(--line); }
@@ -174,9 +224,10 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   left: 0;
   bottom: 0;
   padding: 12px 18px;
+  max-width: 100%;
   background: var(--paper);
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -296,8 +347,8 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .reviews-list {
   max-height: 480px;
   overflow-y: auto;
-  scrollbar-width: none; /* ukryty pasek, przewijanie nadal działa */
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -321,7 +372,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   align-items: baseline;
   gap: 4px 12px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .review footer strong { color: var(--ink); font-weight: 600; }
 .review-source { margin-left: auto; color: var(--accent-ink); }
@@ -348,7 +399,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   padding-top: 14px;
 }
 .project-meta h3 { margin: 0; font: 500 16px var(--display); }
-.project-meta p { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+.project-meta p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
 .project-meta > span { color: var(--accent-ink); font-size: 17px; }
 
 .about {
@@ -366,7 +417,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   padding: 14px 19px;
   background: var(--paper);
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .about-copy {
   align-self: center;
@@ -384,7 +435,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   margin-top: 22px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line);
-  font-size: 11px;
+  font-size: 12px;
 }
 .text-link span { margin-left: 20px; color: var(--accent-ink); }
 
@@ -421,7 +472,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .contact-label {
   margin: 0 0 8px;
   color: var(--label);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -430,7 +481,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .contact-hours dt, .contact-hours dd { margin: 0; }
 .contact-hours dd { color: var(--white); }
 .socials { display: flex; gap: 22px; }
-.socials a { color: var(--on-dark-muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.socials a { color: var(--on-dark-muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
 .socials a:hover { color: var(--on-dark-accent); }
 
 .site-footer {
@@ -450,7 +501,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .site-footer h3 {
   margin: 0 0 16px;
   color: var(--on-dark-accent);
-  font: 600 10px var(--font);
+  font: 600 12px var(--font);
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -461,7 +512,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
   justify-content: space-between;
   padding: 20px 0 24px;
   border-top: 1px solid var(--on-dark-line-soft);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Okno galerii */
@@ -514,13 +565,13 @@ html:has(.lightbox[open]) { overflow: hidden; }
 }
 .toc-list button:hover { background: var(--paper-strong); color: var(--ink); }
 .toc-list button.is-active { border-left-color: var(--accent); color: var(--ink); background: rgba(195, 123, 54, .08); }
-.toc-num { font-size: 10px; color: var(--accent-ink); letter-spacing: .08em; }
+.toc-num { font-size: 12px; color: var(--accent-ink); letter-spacing: .08em; }
 .toc-title { font-family: var(--display); font-size: 13px; line-height: 1.35; }
 .lightbox-content { padding: 25px; }
 .lightbox-image {
   width: 100%;
   height: min(62vh, 590px);
-  object-fit: cover;
+  object-fit: contain;
   background: #e9e6df;
 }
 .lightbox-caption {
@@ -532,10 +583,11 @@ html:has(.lightbox[open]) { overflow: hidden; }
 }
 .lightbox-caption .eyebrow { margin-bottom: 8px; }
 .lightbox-title { margin: 0 0 5px; font-size: 23px; }
+.lightbox-count { flex: none; white-space: nowrap; }
 .lightbox-description, .lightbox-count {
   margin: 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .lightbox-close {
   position: absolute;
@@ -561,8 +613,6 @@ html:has(.lightbox[open]) { overflow: hidden; }
 .lightbox-next { right: calc(250px + 12px); } /* przed spisem treści */
 
 /* ---------- hovery i stany aktywne ---------- */
-.reviews-list::-webkit-scrollbar { display: none; }
-
 .button,
 .text-link,
 .contact-details a,
@@ -698,20 +748,9 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .contact { padding: 58px var(--gutter) 90px; flex-direction: column; gap: 25px; }
   .contact-details { min-width: 0; max-width: 340px; }
   .site-footer { padding: 46px var(--gutter) 0; }
-}
 
-@media (max-width: 520px) {
-  :root { --gutter: 6vw; --arrow-offset: -4.5vw; }
-  h1 { font-size: 43px; }
-  .carousel-card img { height: 340px; }
-  .section-wrap { padding: 65px var(--gutter); }
-  .project-card { flex-basis: 80%; }
-  .project-image img { aspect-ratio: 1.2; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .review { padding: 22px 20px; }
-  .about-image { min-height: 280px; }
-  .contact h2 { font-size: 42px; }
-  .lightbox-content { padding: 14px; }
+  /* okno galerii: jedna kolumna, spis jako poziomy pasek */
+  .lightbox-content { padding: 62px 14px 14px; } /* miejsce na przycisk zamknięcia */
   .lightbox-arrow { top: 42%; width: 40px; height: 40px; }
   .lightbox-next { right: 12px; }
   .lightbox-image { height: 55vh; }
@@ -752,6 +791,21 @@ html:has(.lightbox[open]) { overflow: hidden; }
     border-left-color: var(--accent);
   }
   .toc-title { font-size: 12px; }
+}
+
+@media (max-width: 520px) {
+  :root { --gutter: 6vw; --arrow-offset: -4.5vw; }
+  h1 { font-size: 43px; }
+  .carousel-card img { height: 340px; }
+  /* długie podpisy zawijają się pod zdjęciem zamiast je zasłaniać */
+  .carousel-card figcaption { position: static; padding: 12px 0 0; background: none; }
+  .section-wrap { padding: 65px var(--gutter); }
+  .project-card { flex-basis: 80%; }
+  .project-image img { aspect-ratio: 1.2; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .review { padding: 22px 20px; }
+  .about-image { min-height: 280px; }
+  .contact h2 { font-size: 42px; }
 }
 /* ---------- animacje przy przewijaniu ---------- */
 .reveal {
@@ -795,6 +849,7 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .hero-visual.is-visible .carousel-card img,
   .about-image.is-visible img,
   .nav.is-open > a { animation: none; }
+  .nav > a { opacity: 1; transform: none; }
   .reveal,
   .reveal.is-visible,
   .reveal .eyebrow > span {

@@ -1,7 +1,10 @@
 const IMAGE_WIDTHS = [800, 1400, 2000];
 const FALLBACK_WIDTH = 1400;
 const CARD_SIZES = "(max-width: 520px) 80vw, (max-width: 800px) 60vw, 38vw";
-const LIGHTBOX_SIZES = "(max-width: 800px) calc(100vw - 60px), 800px";
+const LIGHTBOX_SIZES = "(max-width: 800px) calc(100vw - 60px), (max-width: 1152px) calc(100vw - 332px), 820px";
+
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const scrollBehavior = () => (reducedMotionQuery.matches ? "auto" : "smooth");
 
 function imageVariants(path) {
   const srcset = ext => IMAGE_WIDTHS.map(width => `${path}-${width}.${ext} ${width}w`).join(", ");
@@ -122,7 +125,7 @@ function centerProjectCard(card) {
   isProgrammaticScroll = true;
   clearTimeout(programmaticScrollTimer);
   programmaticScrollTimer = setTimeout(endProgrammaticScroll, 900); // zabezpieczenie, gdyby scrollend nie przyszedł
-  projectGrid.scrollTo({ left, behavior: "smooth" });
+  projectGrid.scrollTo({ left, behavior: scrollBehavior() });
 }
 projectGrid.addEventListener("scrollend", endProgrammaticScroll);
 
@@ -184,6 +187,7 @@ function goToSlide(index) {
   const gap = parseFloat(getComputedStyle(carouselTrack).gap) || 0;
   const cardWidth = carouselCards[0].getBoundingClientRect().width;
   carouselTrack.style.transform = `translateX(-${carouselIndex * (cardWidth + gap)}px)`;
+  carouselCards.forEach((card, i) => card.setAttribute("aria-hidden", String(i !== carouselIndex)));
   carouselDots.forEach((dot, i) => {
     dot.classList.toggle("is-active", i === carouselIndex);
     if (i === carouselIndex) dot.setAttribute("aria-current", "true");
@@ -193,6 +197,7 @@ function goToSlide(index) {
 
 carouselDots.forEach((dot, i) => dot.addEventListener("click", () => goToSlide(i)));
 window.addEventListener("resize", () => goToSlide(carouselIndex));
+goToSlide(0);
 
 // Swipe w hero: przeciągnięcie palcem lub myszą zmienia zdjęcie
 const carouselViewport = document.querySelector(".carousel-window");
@@ -304,7 +309,7 @@ function centerActiveToc(smooth) {
   const listRect = tocList.getBoundingClientRect();
   const itemRect = item.getBoundingClientRect();
   const left = tocList.scrollLeft + (itemRect.left - listRect.left) - (listRect.width - itemRect.width) / 2;
-  tocList.scrollTo({ left, behavior: smooth ? "smooth" : "auto" });
+  tocList.scrollTo({ left, behavior: smooth ? scrollBehavior() : "auto" });
 }
 
 function updateToc() {
@@ -343,7 +348,7 @@ async function swapLightboxImage(path, alt, direction) {
     lightboxImage.alt = alt;
   }
 
-  if (!direction || !lightbox.open || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (!direction || !lightbox.open || reducedMotionQuery.matches) {
     setImage();
     return;
   }
@@ -379,9 +384,9 @@ async function swapLightboxImage(path, alt, direction) {
 
 function showLightboxImage(direction = 0) {
   const project = projects[activeProject];
-  const hasMultipleImages = project.images.length > 1;
-  lightboxPrev.hidden = !hasMultipleImages;
-  lightboxNext.hidden = !hasMultipleImages;
+  const canNavigate = projects.length > 1 || project.images.length > 1;
+  lightboxPrev.hidden = !canNavigate;
+  lightboxNext.hidden = !canNavigate;
   swapLightboxImage(project.images[activeImage], `${project.title} — zdjęcie ${activeImage + 1}`, direction);
   lightboxTitle.textContent = project.title;
   lightboxDescription.textContent = project.description;
@@ -404,11 +409,16 @@ function preloadImages(paths) {
   });
 }
 
+function preloadNeighbours(projectIndex) {
+  preloadImages(projects[projectIndex].images);
+  preloadImages(projects[(projectIndex + 1) % projects.length].images);
+  preloadImages(projects[(projectIndex - 1 + projects.length) % projects.length].images);
+}
+
 function openLightbox(projectIndex) {
   activeProject = projectIndex;
   activeImage = 0;
-  preloadImages(projects[projectIndex].images);
-  preloadImages(projects[(projectIndex + 1) % projects.length].images);
+  preloadNeighbours(projectIndex);
   showLightboxImage();
   if (!lightbox.open) {
     lightbox.showModal();
@@ -419,12 +429,19 @@ function openLightbox(projectIndex) {
 // „Zobacz więcej realizacji” otwiera galerię z pierwszą realizacją i spisem treści
 document.querySelector("#more-projects").addEventListener("click", () => openLightbox(0));
 
+// Strzałki i klawisze: kolejne zdjęcie w realizacji, a z ostatniego (pierwszego)
+// przejście do następnej (poprzedniej) realizacji, z zapętleniem
 function moveLightbox(direction) {
   const images = projects[activeProject].images;
-  if (images.length < 2) return;
-  activeImage = (activeImage + direction + images.length) % images.length;
-  if (activeImage === images.length - 1) {
-    preloadImages(projects[(activeProject + 1) % projects.length].images);
+  const next = activeImage + direction;
+
+  if (next >= 0 && next < images.length) {
+    activeImage = next;
+  } else {
+    if (projects.length < 2) return;
+    activeProject = (activeProject + direction + projects.length) % projects.length;
+    activeImage = direction > 0 ? 0 : projects[activeProject].images.length - 1;
+    preloadNeighbours(activeProject);
   }
   showLightboxImage(direction);
 }
@@ -446,43 +463,42 @@ document.addEventListener("keydown", event => {
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 // Delikatne pojawianie się elementów przy przewijaniu
-function setupReveal() {
-  const revealTargets = [
-    ".hero-copy",
-    ".hero-visual",
-    ".section-intro",
-    "#project-grid",
-    ".more-row",
-    ".reviews-intro",
-    ".review",
-    ".about-image",
-    ".about-copy",
-    ".contact > div",
-    ".contact-details",
-    ".footer-grid",
-    ".footer-bottom"
-  ];
-
-  const revealElements = [...document.querySelectorAll(revealTargets.join(","))];
-  revealElements.forEach((el, i) => {
-    el.classList.add("reveal");
-    // Opóźnienie tylko dla elementów z tego samego rodzaju (np. kolejne opinie)
-    el.style.setProperty("--reveal-delay", `${(i % 4) * 80}ms`);
-  });
-
-  if ("IntersectionObserver" in window) {
-    const revealObserver = new IntersectionObserver((entries, observer) => {
+const revealObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" })
+  : null;
 
-    revealElements.forEach(el => revealObserver.observe(el));
-  } else {
-    revealElements.forEach(el => el.classList.add("is-visible"));
-  }
+function revealOnScroll(elements) {
+  elements.forEach((el, i) => {
+    el.classList.add("reveal");
+    // Opóźnienie tylko dla elementów z tego samego rodzaju (np. kolejne opinie)
+    el.style.setProperty("--reveal-delay", `${(i % 4) * 80}ms`);
+
+    // Elementy widoczne od razu po wczytaniu nie znikają, żeby nie migały
+    const rect = el.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!revealObserver || inView) el.classList.add("is-visible");
+    else revealObserver.observe(el);
+  });
 }
 
-setupReveal();
+revealOnScroll(document.querySelectorAll([
+  ".hero-copy",
+  ".hero-visual",
+  ".section-intro",
+  "#project-grid",
+  ".more-row",
+  ".reviews-intro",
+  ".review",
+  ".about-image",
+  ".about-copy",
+  ".contact > div",
+  ".contact-details",
+  ".footer-grid",
+  ".footer-bottom"
+].join(",")));
