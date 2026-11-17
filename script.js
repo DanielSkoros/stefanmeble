@@ -78,12 +78,12 @@ const projects = [
   }
 ];
 
-// Karuzela pokazuje pierwsze 4 projekty, galeria („Zobacz więcej”) wszystkie
-const SLIDER_PROJECT_COUNT = 4;
+// Slider pokazuje wszystkie realizacje; pierwsze karty ładują się od razu, reszta leniwie
+const EAGER_CARDS = 3;
 
 const projectGrid = document.querySelector("#project-grid");
 
-projects.slice(0, SLIDER_PROJECT_COUNT).forEach((project, projectIndex) => {
+projects.forEach((project, projectIndex) => {
   const card = document.createElement("article");
   card.className = "project-card";
   const firstImage = imageVariants(project.images[0]);
@@ -91,7 +91,7 @@ projects.slice(0, SLIDER_PROJECT_COUNT).forEach((project, projectIndex) => {
     <div class="project-image">
       <picture>
         <source type="image/webp" srcset="${firstImage.webp}" sizes="${CARD_SIZES}">
-        <img src="${firstImage.fallback}" srcset="${firstImage.jpg}" sizes="${CARD_SIZES}" alt="${project.title}" loading="lazy" decoding="async">
+        <img src="${firstImage.fallback}" srcset="${firstImage.jpg}" sizes="${CARD_SIZES}" alt="${project.title}" ${projectIndex < EAGER_CARDS ? "" : 'loading="lazy" '}decoding="async">
       </picture>
     </div>
     <div class="project-meta">
@@ -390,6 +390,7 @@ function showLightboxImage(direction = 0) {
   swapLightboxImage(project.images[activeImage], `${project.title} — zdjęcie ${activeImage + 1}`, direction);
   lightboxTitle.textContent = project.title;
   lightboxDescription.textContent = project.description;
+  lightboxCount.hidden = project.images.length < 2;
   lightboxCount.textContent = `${String(activeImage + 1).padStart(2, "0")} / ${String(project.images.length).padStart(2, "0")}`;
   updateToc();
 }
@@ -449,6 +450,24 @@ function moveLightbox(direction) {
 lightboxPrev.addEventListener("click", () => moveLightbox(-1));
 lightboxNext.addEventListener("click", () => moveLightbox(1));
 document.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
+
+// Swipe w galerii (dotyk): przeciągnięcie w lewo = dalej, w prawo = wstecz
+const lightboxContent = document.querySelector(".lightbox-content");
+const SWIPE_MIN = 50;
+let swipeStart = null;
+
+lightboxContent.addEventListener("pointerdown", event => {
+  if (event.pointerType === "mouse" || !event.isPrimary) return;
+  swipeStart = { x: event.clientX, y: event.clientY };
+});
+lightboxContent.addEventListener("pointerup", event => {
+  if (!swipeStart) return;
+  const dx = event.clientX - swipeStart.x;
+  const dy = event.clientY - swipeStart.y;
+  swipeStart = null;
+  if (Math.abs(dx) >= SWIPE_MIN && Math.abs(dx) > Math.abs(dy) * 1.5) moveLightbox(dx < 0 ? 1 : -1);
+});
+lightboxContent.addEventListener("pointercancel", () => { swipeStart = null; });
 
 lightbox.addEventListener("click", event => {
   if (event.target === lightbox) lightbox.close();
