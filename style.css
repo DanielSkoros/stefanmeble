@@ -770,7 +770,10 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
   .about { grid-template-columns: 1fr; }
-  .about-image { min-height: 350px; }
+  /* zdjęcie „O nas" jest pionowe: wyższy kadr, dosunięty do dołu, żeby siedzisko z prawej było widoczne w całości */
+  .about-image { min-height: min(120vw, 600px); }
+  .about-image img { object-position: center bottom; }
+  .image-label { right: auto; left: 0; }
   .about-copy { padding: 55px var(--gutter); }
   .contact { padding: 58px var(--gutter) 90px; flex-direction: column; gap: 25px; }
   .contact-details { min-width: 0; max-width: 340px; }
@@ -842,7 +845,6 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .project-card { flex-basis: 80%; }
   .project-image img { aspect-ratio: 1.2; }
   .review { padding: 22px 20px; }
-  .about-image { min-height: 280px; }
   .contact h2 { font-size: 42px; }
 }
 /* ---------- animacje przy przewijaniu ---------- */
