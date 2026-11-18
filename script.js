@@ -26,9 +26,9 @@ const projects = [
     images: ["assets/images/projects/01/photo-01"]
   },
   {
-    title: "Sypialnia z podestem",
+    title: "Sypialnia z lewitującym łóżkiem",
     category: "Sypialnia · Zabudowa",
-    description: "Łóżko na podeście, dębowy panel ścienny, szafa z lustrem.",
+    description: "Lewitujące łóżko, dębowy panel ścienny, szafa z lustrem.",
     images: ["assets/images/projects/02/photo-01"]
   },
   {
@@ -68,7 +68,7 @@ const projects = [
     images: ["assets/images/projects/08/photo-01"]
   },
   {
-    title: "Kuchnia z wyspą i zabudową",
+    title: "Kuchnia z wyspą",
     category: "Kuchnia · Meble na wymiar",
     description: "Białe szafki do sufitu, dębowe dolne, wyspa.",
     images: ["assets/images/projects/09/photo-01"]

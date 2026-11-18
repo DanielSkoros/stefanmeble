@@ -86,6 +86,24 @@ img { display: block; width: 100%; }
 .nav { display: flex; align-items: center; gap: 38px; font-size: 14px; }
 .nav > a { transition: color .2s; }
 .nav > a:hover, .text-link:hover { color: var(--accent-ink); }
+.nav-social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+  padding-left: 32px;
+  border-left: 1px solid var(--line);
+}
+.nav-social a { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: var(--ink); transition: color .2s, transform .2s; }
+.nav-social a:hover { transform: translateY(-2px); }
+.nav-social svg path { transition: fill .2s; }
+/* viewBox każdej ikony jest przycięty do samego glifu (środek = środek ikony), więc obie mają ten sam rozmiar i oś pionową */
+.nav-social svg { display: block; width: 18px; height: 18px; }
+.nav-social .social-fb:hover { color: #1877f2; }
+.nav-social .social-google:hover .g-blue { fill: #4285f4; }
+.nav-social .social-google:hover .g-green { fill: #34a853; }
+.nav-social .social-google:hover .g-yellow { fill: #fbbc05; }
+.nav-social .social-google:hover .g-red { fill: #ea4335; }
 .menu-toggle { display: none; }
 
 .hero {
@@ -455,7 +473,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 }
 .contact-details a:not(.button) span { float: right; color: var(--on-dark-accent); }
 .contact-call { justify-content: space-between; margin-top: 0; padding: 16px 20px; font-size: 14px; }
-.contact-address { margin: 0; color: var(--on-dark-muted); font-size: 14px; }
+.contact-email, .contact-address { margin: 0; color: var(--on-dark-muted); font-size: 14px; }
 .contact-hours { color: var(--on-dark-muted); font-size: 14px; }
 .contact-label {
   margin: 0 0 8px;
@@ -710,8 +728,10 @@ html:has(.lightbox[open]) { overflow: hidden; }
     pointer-events: auto;
     transition: opacity .3s ease, transform .4s cubic-bezier(.2,.7,.2,1), visibility 0s;
   }
-  .nav > a { padding: 13px 0; opacity: 0; transform: translateX(-10px); }
-  .nav.is-open > a { animation: navItemIn .45s cubic-bezier(.2,.7,.2,1) forwards; }
+  .nav > a, .nav > .nav-social { padding: 13px 0; opacity: 0; transform: translateX(-10px); }
+  .nav-social { margin: 0; padding-left: 0; border-left: 0; gap: 14px; }
+  .nav.is-open > a, .nav.is-open > .nav-social { animation: navItemIn .45s cubic-bezier(.2,.7,.2,1) forwards; }
+  .nav.is-open > .nav-social { animation-delay: .3s; }
   .nav.is-open > a:nth-child(1) { animation-delay: .06s; }
   .nav.is-open > a:nth-child(2) { animation-delay: .12s; }
   .nav.is-open > a:nth-child(3) { animation-delay: .18s; }
@@ -737,6 +757,7 @@ html:has(.lightbox[open]) { overflow: hidden; }
     white-space: nowrap;
   }
   .carousel-card img { height: 420px; }
+  .carousel-card:nth-child(3) img { object-position: left center; } /* pokazuje meble po lewej, bez lodówki */
   .section-wrap { padding: 75px var(--gutter); }
   .section-intro { align-items: start; flex-direction: column; gap: 5px; }
   .project-card { flex-basis: 60%; }
@@ -859,8 +880,9 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .skip-link { transition: none; scroll-behavior: auto; }
   .hero-visual.is-visible .carousel-card img,
   .about-image.is-visible img,
-  .nav.is-open > a { animation: none; }
-  .nav > a { opacity: 1; transform: none; }
+  .nav.is-open > a,
+  .nav.is-open > .nav-social { animation: none; }
+  .nav > a, .nav > .nav-social { opacity: 1; transform: none; }
   .reveal,
   .reveal.is-visible,
   .reveal .eyebrow > span {

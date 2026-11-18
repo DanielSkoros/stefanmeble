@@ -1,6 +1,6 @@
 # Stefan Meble
 
-> Stefan Meble (Niewiadomski Maciej) to pracownia stolarska w Redzie. Wykonuje meble i zabudowy na wymiar z płyt meblowych: kuchnie, szafy, łazienki i meble biurowe. Zakres usługi: pomiar, projekt i montaż. Obsługuje Redę i Trójmiasto (Gdynia, Gdańsk, Sopot).
+> Stefan Meble (Niewiadomski Maciej) to pracownia stolarska w Redzie. Wykonuje meble i zabudowy na wymiar: kuchnie, szafy, łazienki i meble biurowe. Zakres usługi: pomiar, projekt i montaż. Obsługuje Trójmiasto (Gdynia, Gdańsk, Sopot), Rumię, Redę, Wejherowo i okolice.
 
 Strona jest jednostronicowa, po polsku. Zdjęcia realizacji są w galerii na stronie głównej.
 
@@ -17,11 +17,12 @@ Strona jest jednostronicowa, po polsku. Zdjęcia realizacji są w galerii na str
 - [Realizacje](https://stefanmeble.pl/#realizacje): przykłady zrealizowanych kuchni, zabudów, szaf i łazienek
 - [Opinie klientów](https://stefanmeble.pl/#opinie): opinie z Google i Facebooka
 - [O nas](https://stefanmeble.pl/#o-nas): podejście do projektu i wykonania
-- [Kontakt](https://stefanmeble.pl/#kontakt): telefon, adres i godziny otwarcia
+- [Kontakt](https://stefanmeble.pl/#kontakt): telefon, e-mail, adres i godziny otwarcia
 
 ## Kontakt
 
 - Telefon: +48 786 822 849
+- E-mail: biurostefanmeble@gmail.com
 - Adres: Olimpijska 13b/7, 84-240 Reda
 - Godziny otwarcia: poniedziałek–piątek 08:00–17:00, sobota 08:00–15:00, niedziela zamknięte
 - [Facebook](https://www.facebook.com/profile.php?id=100076590320800)
