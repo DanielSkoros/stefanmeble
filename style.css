@@ -757,7 +757,9 @@ html:has(.lightbox[open]) { overflow: hidden; }
     white-space: nowrap;
   }
   .carousel-card img { height: 420px; }
-  .carousel-card:nth-child(3) img { object-position: left center; } /* pokazuje meble po lewej, bez lodówki */
+  /* slajd 3: kadr przesunięty od lewej krawędzi o ok. 30px (27% nadmiaru zdjęcia; procent nie zostawi pustego paska), żeby z prawej został kawałek lodówki,
+     a z lewej mniej ściany */
+  .carousel-card:nth-child(3) img { object-position: 27% center; }
   .section-wrap { padding: 75px var(--gutter); }
   .section-intro { align-items: start; flex-direction: column; gap: 5px; }
   .project-card { flex-basis: 60%; }
