@@ -516,6 +516,7 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .site-footer a:hover { color: white; }
 .footer-bottom {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 20px 0 24px;
   border-top: 1px solid var(--on-dark-line-soft);
