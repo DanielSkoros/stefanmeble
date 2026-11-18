@@ -766,7 +766,9 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .project-card { flex-basis: 60%; }
   .section-side { align-items: flex-start; }
   .reviews { grid-template-columns: 1fr; gap: 36px; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+  /* stopka: opis firmy na całą szerokość, pod nim obok siebie Nawigacja (lewo) i Usługi (prawo) */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
   .about { grid-template-columns: 1fr; }
   .about-image { min-height: 350px; }
   .about-copy { padding: 55px var(--gutter); }
@@ -777,6 +779,8 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .socials a,
   .footer-bottom a,
   .site-footer li a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* ten sam rytm w obu listach: wysokość wiersza trzyma <li>, a nie tylko link (Usługi nie mają linków) */
+  .site-footer li { display: flex; align-items: center; min-height: 44px; }
   .site-footer ul { gap: 0; }
 
   /* okno galerii: jedna kolumna, spis jako poziomy pasek */
@@ -837,7 +841,6 @@ html:has(.lightbox[open]) { overflow: hidden; }
   .section-wrap { padding: 65px var(--gutter); }
   .project-card { flex-basis: 80%; }
   .project-image img { aspect-ratio: 1.2; }
-  .footer-grid { grid-template-columns: 1fr; }
   .review { padding: 22px 20px; }
   .about-image { min-height: 280px; }
   .contact h2 { font-size: 42px; }
